@@ -1,0 +1,106 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Book {
+    int id;
+    string title;
+    string author;
+    bool issued;
+};
+
+vector<Book> books;
+
+void addBook() {
+    Book b;
+    cout << "Enter Book ID: ";
+    cin >> b.id;
+    cin.ignore();
+
+    cout << "Enter Title: ";
+    getline(cin, b.title);
+
+    cout << "Enter Author: ";
+    getline(cin, b.author);
+
+    b.issued = false;
+    books.push_back(b);
+
+    cout << "Book Added Successfully!\n";
+}
+
+void issueBook() {
+    int id;
+    cout << "Enter Book ID to Issue: ";
+    cin >> id;
+
+    for (auto &b : books) {
+        if (b.id == id && !b.issued) {
+            b.issued = true;
+            cout << "Book Issued Successfully!\n";
+            return;
+        }
+    }
+    cout << "Book Not Available!\n";
+}
+
+void returnBook() {
+    int id;
+    cout << "Enter Book ID to Return: ";
+    cin >> id;
+
+    for (auto &b : books) {
+        if (b.id == id && b.issued) {
+            b.issued = false;
+            cout << "Book Returned Successfully!\n";
+            return;
+        }
+    }
+    cout << "Book Not Found!\n";
+}
+
+void searchBook() {
+    string name;
+    cin.ignore();
+
+    cout << "Enter Title: ";
+    getline(cin, name);
+
+    for (auto b : books) {
+        if (b.title == name) {
+            cout << "\nBook Found\n";
+            cout << "ID: " << b.id << endl;
+            cout << "Title: " << b.title << endl;
+            cout << "Author: " << b.author << endl;
+            return;
+        }
+    }
+    cout << "Book Not Found!\n";
+}
+
+int main() {
+    int choice;
+
+    do {
+        cout << "\n===== Library Management System =====\n";
+        cout << "1. Add Book\n";
+        cout << "2. Issue Book\n";
+        cout << "3. Return Book\n";
+        cout << "4. Search Book\n";
+        cout << "5. Exit\n";
+        cout << "Enter Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: addBook(); break;
+            case 2: issueBook(); break;
+            case 3: returnBook(); break;
+            case 4: searchBook(); break;
+            case 5: cout << "Thank You!\n"; break;
+            default: cout << "Invalid Choice!\n";
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}

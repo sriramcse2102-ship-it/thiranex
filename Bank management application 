@@ -1,0 +1,63 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+class BankAccount {
+private:
+    string name;
+    int accountNo;
+    float balance;
+
+public:
+    void createAccount() {
+        cout << "Enter Name: ";
+        cin >> name;
+        cout << "Enter Account Number: ";
+        cin >> accountNo;
+        cout << "Enter Initial Balance: ";
+        cin >> balance;
+
+        ofstream file("account.txt");
+        file << name << endl;
+        file << accountNo << endl;
+        file << balance << endl;
+        file.close();
+    }
+
+    void deposit() {
+        float amount;
+        cout << "Enter Deposit Amount: ";
+        cin >> amount;
+        balance += amount;
+        cout << "Balance: " << balance << endl;
+    }
+
+    void withdraw() {
+        float amount;
+        cout << "Enter Withdraw Amount: ";
+        cin >> amount;
+
+        if(amount <= balance) {
+            balance -= amount;
+            cout << "Balance: " << balance << endl;
+        }
+        else {
+            cout << "Insufficient Balance!" << endl;
+        }
+    }
+
+    void showBalance() {
+        cout << "Current Balance: " << balance << endl;
+    }
+};
+
+int main() {
+    BankAccount acc;
+
+    acc.createAccount();
+    acc.deposit();
+    acc.withdraw();
+    acc.showBalance();
+
+    return 0;
+}
